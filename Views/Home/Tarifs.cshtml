@@ -1,0 +1,46 @@
+@{
+    ViewData["Title"] = "Tarifs";
+    var tarifs = new[]
+    {
+        new { Depart = "Casablanca", Arrivee = "Rabat", Prix = "350 MAD" },
+        new { Depart = "Casablanca", Arrivee = "Marrakech", Prix = "650 MAD" },
+        new { Depart = "Casablanca", Arrivee = "Tanger", Prix = "850 MAD" },
+        new { Depart = "Rabat", Arrivee = "Fes", Prix = "600 MAD" },
+        new { Depart = "Marrakech", Arrivee = "Agadir", Prix = "700 MAD" },
+        new { Depart = "Tanger", Arrivee = "Oujda", Prix = "1 100 MAD" },
+        new { Depart = "Fes", Arrivee = "Meknes", Prix = "300 MAD" },
+        new { Depart = "Agadir", Arrivee = "Laayoune", Prix = "1 400 MAD" }
+    };
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Tarifs ville a ville</h1>
+        <p class="page-lead">Estimation de base pour les trajets frequents au Maroc. Le prix final depend du poids, du volume et du type de service.</p>
+    </div>
+    <a asp-controller="DemandeLivraison" asp-action="Inscription" class="btn btn-soft">
+        <i class="bi bi-send-check"></i> Demander un devis
+    </a>
+</div>
+
+<div class="table-shell">
+    <table class="table dashboard-table">
+        <thead>
+            <tr>
+                <th>Ville depart</th>
+                <th>Ville arrivee</th>
+                <th>Prix a partir de</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tarif in tarifs)
+            {
+                <tr>
+                    <td>@tarif.Depart</td>
+                    <td>@tarif.Arrivee</td>
+                    <td><span class="badge-soft">@tarif.Prix</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

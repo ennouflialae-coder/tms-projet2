@@ -1,0 +1,62 @@
+﻿@page "/Transporteurs/IndexTrasporteurs"
+@model TMS_Project.Pages.Transporteurs.IndexTrasporteursModel
+@{
+    ViewData["Title"] = "Gestion des Transporteurs";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary"><i class="bi bi-truck"></i> Liste des Transporteurs</h1>
+        <a asp-page="./Create" class="btn btn-success shadow-sm">
+            <i class="bi bi-plus-circle"></i> Nouveau Transporteur
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="px-4">Nom du Transporteur</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Transporteur != null && Model.Transporteur.Any())
+                    {
+                        @foreach (var item in Model.Transporteur)
+                        {
+                            <tr>
+                                <td class="align-middle px-4 fw-bold text-secondary">
+                                    @Html.DisplayFor(modelItem => item.Nom)
+                                </td>
+                                <td class="text-center align-middle">
+                                    <div class="btn-group">
+                                        <a asp-page="./Edit" asp-route-id="@item.TransporteurId" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil"></i> Modifier
+                                        </a>
+                                        <a asp-page="./Details" asp-route-id="@item.TransporteurId" class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i> Détails
+                                        </a>
+                                        <a asp-page="./Delete" asp-route-id="@item.TransporteurId" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash"></i> Supprimer
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center py-5 text-muted">
+                                <i class="bi bi-info-circle h2"></i>
+                                <p class="mt-2">Aucun transporteur trouvé dans la base de données.</p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+﻿@model TMS_Project.Models.Livraison
+@{
+    ViewData["Title"] = $"Livraison #{Model.LivraisonId}";
+    var cls = Model.StatutLivraison switch
+    {
+        "Livrée" => "bg-success",
+        "En cours" => "bg-warning text-dark",
+        "Échouée" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-box-seam-fill"></i> Livraison #@Model.LivraisonId</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.LivraisonId" class="btn btn-warning">
+            <i class="bi bi-pencil"></i> Modifier
+        </a>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+    </div>
+</div>
+
+<div class="row g-4">
+
+    <!-- Infos livraison -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white">
+                <i class="bi bi-info-circle"></i> Informations livraison
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <th width="45%">Client :</th>
+                        <td><strong>@Model.Client?.Nom</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Adresse :</th>
+                        <td>@Model.Adresse</td>
+                    </tr>
+                    <tr>
+                        <th>Poids :</th>
+                        <td>@Model.PoidsKg kg</td>
+                    </tr>
+                    <tr>
+                        <th>Date prévue :</th>
+                        <td>@Model.DateLivraison.ToString("dd/MM/yyyy")</td>
+                    </tr>
+                    <tr>
+                        <th>Statut :</th>
+                        <td><span class="badge @cls fs-6">@Model.StatutLivraison</span></td>
+                    </tr>
+                    <tr>
+                        <th>Réalisée le :</th>
+                        <td>
+                            @(Model.DateRealisation.HasValue
+                                                        ? Model.DateRealisation.Value.ToString("dd/MM/yyyy HH:mm")
+                                                        : "—")
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tournée associée -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-map"></i> Tournée associée
+            </div>
+            <div class="card-body">
+                @if (Model.Tournee != null)
+                {
+                    <table class="table table-borderless mb-0">
+                        <tr>
+                            <th width="40%">Tournée :</th>
+                            <td>
+                                <a asp-controller="Tournee" asp-action="Details"
+                                   asp-route-id="@Model.Tournee.TourneeId">
+                                    Tournée #@Model.Tournee.TourneeId
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Date tournée :</th>
+                            <td>@Model.Tournee.DateTournee.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                        <tr>
+                            <th>Statut tournée :</th>
+                            <td>@Model.Tournee.StatutTournee</td>
+                        </tr>
+                        <tr>
+                            <th>Camion :</th>
+                            <td>@(Model.Tournee.Camion?.Immatriculation ?? "—")</td>
+                        </tr>
+                        <tr>
+                            <th>Chauffeur :</th>
+                            <td>
+                                @(Model.Tournee.Chauffeur != null
+                                                            ? $"{Model.Tournee.Chauffeur.Prenom} {Model.Tournee.Chauffeur.Nom}"
+                                                            : "—")
+                            </td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="bi bi-exclamation-circle fs-3 d-block mb-2"></i>
+                        Cette livraison n'est pas encore affectée à une tournée.
+                        <br />
+                        <a asp-action="Edit" asp-route-id="@Model.LivraisonId"
+                           class="btn btn-sm btn-outline-primary mt-2">
+                            Affecter à une tournée
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,94 @@
+@model IEnumerable<DemandeLivraison>
+
+@{
+    ViewData["Title"] = "Validation demandes";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Validation des demandes clients</h1>
+        <p class="page-lead">Chaque nouvelle demande client arrive ici pour acceptation ou refus.</p>
+    </div>
+    @if ((int)(ViewBag.NouvellesDemandes ?? 0) > 0)
+    {
+        <span class="notification-pill">
+            <i class="bi bi-bell-fill"></i> @ViewBag.NouvellesDemandes nouveau(x) client(s)
+        </span>
+    }
+</div>
+
+<div class="table-shell">
+    <table class="table dashboard-table">
+        <thead>
+            <tr>
+                <th>Ref.</th>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th class="text-end">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="6">
+                    <div class="empty-state">
+                        <i class="bi bi-inbox"></i>
+                        <div class="mt-2">Aucune demande enregistree.</div>
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var demande in Model)
+            {
+                <tr>
+                    <td><span class="badge-soft">#@demande.DemandeLivraisonId</span></td>
+                    <td>
+                        <strong>@(demande.Client?.Nom ?? "Client inconnu")</strong>
+                        <div class="text-muted small">@demande.Client?.Email</div>
+                    </td>
+                    <td>@demande.TypeService</td>
+                    <td>@demande.MontantEstime.ToString("0.00") MAD</td>
+                    <td>@demande.Statut</td>
+                    <td class="text-end">
+                        @if (demande.Statut == "En attente")
+                        {
+                            <form asp-action="Accepter" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@demande.DemandeLivraisonId" />
+                                <button type="submit" class="btn-soft"><i class="bi bi-check2-circle"></i> Accepter</button>
+                            </form>
+                            <form asp-action="Refuser" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@demande.DemandeLivraisonId" />
+                                <button type="submit" class="btn-soft"><i class="bi bi-x-circle"></i> Refuser</button>
+                            </form>
+                        }
+                        else if (demande.Statut == "Acceptee")
+                        {
+                            <form asp-action="MarquerLivree" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@demande.DemandeLivraisonId" />
+                                <button type="submit" class="btn-soft"><i class="bi bi-truck"></i> Marquer livree</button>
+                            </form>
+                            <a asp-action="Recu" asp-route-id="@demande.DemandeLivraisonId" class="btn-soft">
+                                <i class="bi bi-receipt"></i> Statut
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Recu" asp-route-id="@demande.DemandeLivraisonId" class="btn-soft">
+                                <i class="bi bi-receipt"></i> Statut
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

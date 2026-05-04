@@ -1,0 +1,35 @@
+@{
+    ViewData["Title"] = "Connection";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Connection</h1>
+        <p class="page-lead">Choisissez votre espace : administration TRANS-LOG ou suivi client.</p>
+    </div>
+</div>
+
+<section class="connection-grid">
+    <div class="connection-card">
+        <div class="auth-icon"><i class="bi bi-shield-lock"></i></div>
+        <h2>Connexion Admin</h2>
+        <p>Acceder au dashboard, valider les demandes et gerer la flotte.</p>
+        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/Home/Dashboard" class="btn btn-soft">
+            <i class="bi bi-box-arrow-in-right"></i> Entrer comme admin
+        </a>
+    </div>
+
+    <div class="connection-card">
+        <div class="auth-icon"><i class="bi bi-person-check"></i></div>
+        <h2>Connexion Client</h2>
+        <p>Connectez-vous comme client pour envoyer une demande de livraison.</p>
+        <div class="hero-actions">
+            <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="/DemandeLivraison/Inscription" class="btn btn-soft">
+                <i class="bi bi-box-arrow-in-right"></i> Se connecter
+            </a>
+            <a asp-controller="Account" asp-action="Register" asp-route-returnUrl="/DemandeLivraison/Inscription" class="btn btn-soft">
+                <i class="bi bi-person-plus"></i> Creer un compte
+            </a>
+        </div>
+    </div>
+</section>

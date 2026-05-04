@@ -1,0 +1,46 @@
+@model TMS_Project.Models.Camion
+
+@{
+    ViewData["Title"] = "Créer un camion";
+}
+
+<h3>Créer un camion</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="TransporteurId" class="form-label"></label>
+        <select asp-for="TransporteurId" asp-items="ViewBag.TransporteurId" class="form-select">
+            <option value="">Sélectionner un transporteur</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Marque" class="form-label"></label>
+        <input asp-for="Marque" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Modele" class="form-label"></label>
+        <input asp-for="Modele" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Immatriculation" class="form-label"></label>
+        <input asp-for="Immatriculation" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="CapaciteKg" class="form-label"></label>
+        <input asp-for="CapaciteKg" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DateAcquisition" class="form-label"></label>
+        <input asp-for="DateAcquisition" type="date" class="form-control" />
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="EstActif" class="form-check-input" />
+        <label asp-for="EstActif" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,57 @@
+﻿@page
+@model TMS_Project.Pages.Transporteurs.DeleteModel
+
+@{
+    ViewData["Title"] = "Supprimer Transporteur";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-danger text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmation de Suppression</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="alert alert-warning border-start border-4 border-warning">
+                        <h5 class="alert-heading">Êtes-vous sûr de vouloir supprimer ceci ?</h5>
+                        <p class="mb-0">Cette action est irréversible et supprimera définitivement les données du transporteur.</p>
+                    </div>
+
+                    <h5 class="text-secondary border-bottom pb-2 mb-3">Détails du Transporteur</h5>
+                    
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Nom du Transporteur</dt>
+                        <dd class="col-sm-8 fw-bold">@Html.DisplayFor(model => model.Transporteur.Nom)</dd>
+
+                        <dt class="col-sm-4 text-muted">Adresse</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.Adresse)</dd>
+
+                        <dt class="col-sm-4 text-muted">Téléphone</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.Telephone)</dd>
+
+                        <dt class="col-sm-4 text-muted">E-mail</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.Email)</dd>
+
+                        <dt class="col-sm-4 text-muted">Date de Création</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.DateCreation)</dd>
+                    </dl>
+
+                    <hr class="my-4">
+
+                    <form method="post" class="d-flex justify-content-between align-items-center">
+                        <input type="hidden" asp-for="Transporteur.TransporteurId" />
+                        
+                        <a asp-page="./IndexTrasporteurs" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Annuler et Retour
+                        </a>
+                        
+                        <button type="submit" class="btn btn-danger px-4 shadow-sm">
+                            <i class="bi bi-trash"></i> Confirmer la Suppression
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

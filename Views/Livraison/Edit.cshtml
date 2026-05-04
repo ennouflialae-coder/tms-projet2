@@ -1,0 +1,96 @@
+﻿@model TMS_Project.ViewModels.LivraisonFormViewModel
+@{
+    ViewData["Title"] = $"Modifier Livraison #{Model.Livraison.LivraisonId}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-pencil-square"></i> Modifier Livraison #@Model.Livraison.LivraisonId</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Retour
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Livraison.LivraisonId" />
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label asp-for="Livraison.ClientId" class="form-label fw-bold">
+                        <i class="bi bi-person-fill"></i> Client
+                    </label>
+                    <select asp-for="Livraison.ClientId" asp-items="Model.Clients" class="form-select">
+                        <option value="">-- Sélectionner --</option>
+                    </select>
+                    <span asp-validation-for="Livraison.ClientId" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Livraison.Adresse" class="form-label fw-bold">
+                        <i class="bi bi-geo-alt"></i> Adresse
+                    </label>
+                    <input asp-for="Livraison.Adresse" class="form-control" />
+                    <span asp-validation-for="Livraison.Adresse" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Livraison.PoidsKg" class="form-label fw-bold">Poids (kg)</label>
+                    <input asp-for="Livraison.PoidsKg" class="form-control" type="number" min="1" />
+                    <span asp-validation-for="Livraison.PoidsKg" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Livraison.DateLivraison" class="form-label fw-bold">Date prévue</label>
+                    <input asp-for="Livraison.DateLivraison" class="form-control" type="date" />
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Livraison.StatutLivraison" class="form-label fw-bold">Statut</label>
+                    <select asp-for="Livraison.StatutLivraison" class="form-select">
+                        <option value="En attente">En attente</option>
+                        <option value="En cours">En cours</option>
+                        <option value="Livrée">✅ Livrée</option>
+                        <option value="Échouée">❌ Échouée</option>
+                    </select>
+                    <small class="text-muted">Choisir "Livrée" enregistre automatiquement la date.</small>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="Livraison.TourneeId" class="form-label fw-bold">Tournée</label>
+                    <select asp-for="Livraison.TourneeId" asp-items="Model.Tournees" class="form-select">
+                        <option value="0">-- Sans tournée --</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label asp-for="Livraison.DateRealisation" class="form-label fw-bold">
+                        Date de réalisation
+                        <span class="text-muted fw-normal small">(auto si "Livrée")</span>
+                    </label>
+                    <input asp-for="Livraison.DateRealisation" class="form-control" type="date" />
+                </div>
+
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-warning btn-lg">
+                    <i class="bi bi-save"></i> Enregistrer les modifications
+                </button>
+                <a asp-action="Details" asp-route-id="@Model.Livraison.LivraisonId" class="btn btn-info btn-lg">
+                    <i class="bi bi-eye"></i> Voir les détails
+                </a>
+                <a asp-action="Index" class="btn btn-secondary btn-lg">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

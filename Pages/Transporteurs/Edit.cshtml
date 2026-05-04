@@ -1,0 +1,75 @@
+﻿@page
+@model TMS_Project.Pages.Transporteurs.EditModel
+
+@{
+    ViewData["Title"] = "Modifier Transporteur";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Modifier le Transporteur</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="Transporteur.TransporteurId" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Nom du Transporteur</label>
+                                <input asp-for="Transporteur.Nom" class="form-control" />
+                                <span asp-validation-for="Transporteur.Nom" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">E-mail</label>
+                                <input asp-for="Transporteur.Email" class="form-control" />
+                                <span asp-validation-for="Transporteur.Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Adresse complète</label>
+                            <input asp-for="Transporteur.Adresse" class="form-control" />
+                            <span asp-validation-for="Transporteur.Adresse" class="text-danger small"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Téléphone</label>
+                                <input asp-for="Transporteur.Telephone" class="form-control" />
+                                <span asp-validation-for="Transporteur.Telephone" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Date de Création</label>
+                                <input asp-for="Transporteur.DateCreation" class="form-control" type="date" />
+                                <span asp-validation-for="Transporteur.DateCreation" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a asp-page="./IndexTrasporteurs" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Annuler
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5 shadow-sm">
+                                <i class="bi bi-save"></i> Enregistrer les modifications
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

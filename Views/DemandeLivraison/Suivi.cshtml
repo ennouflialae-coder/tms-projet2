@@ -1,0 +1,95 @@
+@model ClientStatusViewModel
+
+@{
+    ViewData["Title"] = "Suivi client";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Suivre ma demande</h1>
+        <p class="page-lead">Entrez votre reference et l'email utilise pendant la demande.</p>
+    </div>
+</div>
+
+<section class="dashboard-grid">
+    <div class="section-card grid-span-5">
+        <form asp-action="Suivi" method="post" class="row g-3">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-12">
+                <label asp-for="DemandeLivraisonId" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text">#</span>
+                    <input asp-for="DemandeLivraisonId" class="form-control" />
+                </div>
+                <span asp-validation-for="DemandeLivraisonId" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label asp-for="EmailClient" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input asp-for="EmailClient" class="form-control" />
+                </div>
+                <span asp-validation-for="EmailClient" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-dashboard-primary auth-submit">
+                    <i class="bi bi-search"></i> Voir le statut
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="section-card grid-span-7">
+        @if (Model.Demande == null)
+        {
+            <div class="empty-state">
+                <i class="bi bi-clipboard2-check"></i>
+                <div class="mt-2">Votre statut apparaitra ici apres recherche.</div>
+            </div>
+        }
+        else
+        {
+            var statusClass = Model.Demande.Statut == "Livree" ? "status-ok" :
+                Model.Demande.Statut == "Refusee" ? "status-danger" : "status-wait";
+            var recuDisponible = Model.Demande.Statut == "Acceptee" || Model.Demande.Statut == "Livree";
+
+            <span class="status-chip @statusClass">@Model.Demande.Statut</span>
+            <h2 class="section-title mt-3">Demande #@Model.Demande.DemandeLivraisonId</h2>
+            @if (recuDisponible)
+            {
+                <p class="section-subtitle">Votre demande a recu l'accord de l'administration. Le reçu est maintenant disponible.</p>
+            }
+            else
+            {
+                <p class="section-subtitle">Votre reçu reste bloque jusqu'a l'accord de l'administrateur.</p>
+            }
+
+            <div class="mini-info-list">
+                <div class="mini-info-item"><span>Client</span><span>@Model.Demande.Client?.Nom</span></div>
+                <div class="mini-info-item"><span>Date souhaitee</span><span>@Model.Demande.DateSouhaitee.ToString("dd/MM/yyyy")</span></div>
+                <div class="mini-info-item"><span>Statut</span><span>@Model.Demande.Statut</span></div>
+                @if (recuDisponible)
+                {
+                    <div class="mini-info-item"><span>Marchandise</span><span>@Model.Demande.DescriptionMarchandise</span></div>
+                    <div class="mini-info-item"><span>Adresse</span><span>@Model.Demande.Adresse</span></div>
+                    <div class="mini-info-item"><span>Montant estime</span><span>@Model.Demande.MontantEstime.ToString("0.00") MAD</span></div>
+                }
+            </div>
+
+            @if (recuDisponible)
+            {
+                <a asp-action="Recu" asp-route-id="@Model.Demande.DemandeLivraisonId" class="btn btn-soft mt-4">
+                    <i class="bi bi-receipt"></i> Voir le reçu
+                </a>
+            }
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

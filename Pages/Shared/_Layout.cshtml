@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TRANS-LOG</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TMS_Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header>
+            <nav class="navbar navbar-expand-lg app-navbar">
+                <div class="container">
+                    <a class="navbar-brand app-brand" asp-area="" asp-page="/Index">
+                        <span class="brand-mark"><i class="bi bi-truck-flatbed"></i></span>
+                        <span>TRANS-LOG</span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-expanded="false">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="navbar-collapse collapse">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Index"><i class="bi bi-house-door me-1"></i>Accueil</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Transporteur" asp-action="Index"><i class="bi bi-buildings me-1"></i>Transporteurs</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Camion" asp-action="Index"><i class="bi bi-truck me-1"></i>Camions</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Chauffeur" asp-action="Index"><i class="bi bi-person-vcard me-1"></i>Chauffeurs</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Livraison" asp-action="Index"><i class="bi bi-box-seam me-1"></i>Livraisons</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Tournee" asp-action="Index"><i class="bi bi-calendar-event me-1"></i>Tournées</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="DemandeLivraison" asp-action="Inscription"><i class="bi bi-person-plus me-1"></i>Demande client</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="DemandeLivraison" asp-action="Admin"><i class="bi bi-clipboard-check me-1"></i>Validation</a></li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Privacy"><i class="bi bi-shield-lock me-1"></i>Confidentialité</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="app-main container">
+            @RenderBody()
+        </main>
+
+        <footer class="app-footer">
+            <div class="footer-note d-flex flex-wrap justify-content-between gap-2">
+                <span><strong>TRANS-LOG</strong> - Plateforme de gestion transport et logistique</span>
+                <span>&copy; 2026</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

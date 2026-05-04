@@ -1,0 +1,67 @@
+﻿@model TMS_Project.Models.Chauffeur
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold">Modifier le Chauffeur</h1>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4">
+            <!-- T-yqed mn had l-form action -->
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                
+                <!-- HAD L-INPUT HUWA L-MOUCHKIL: Darouri bach i-douz l-ID -->
+                <input type="hidden" asp-for="ChauffeurId" />
+
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Nom" class="form-label fw-bold"></label>
+                        <input asp-for="Nom" class="form-control rounded-pill" />
+                        <span asp-validation-for="Nom" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Prenom" class="form-label fw-bold"></label>
+                        <input asp-for="Prenom" class="form-control rounded-pill" />
+                        <span asp-validation-for="Prenom" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Transporteur</label>
+                        <select asp-for="TransporteurId" class="form-select rounded-pill" asp-items="ViewBag.TransporteurId">
+                            <option value="">-- Sélectionner --</option>
+                        </select>
+                        <span asp-validation-for="TransporteurId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DateEmbauche" class="form-label fw-bold"></label>
+                        <input asp-for="DateEmbauche" type="date" class="form-control rounded-pill" />
+                        <span asp-validation-for="DateEmbauche" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" asp-for="EstActif" />
+                    <label class="form-check-label fw-bold">En service</label>
+                </div>
+
+                <button type="submit" class="btn btn-warning rounded-pill px-5 shadow-sm fw-bold">
+                    Enregistrer les modifications
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }

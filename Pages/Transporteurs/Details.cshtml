@@ -1,0 +1,49 @@
+﻿@page
+@model TMS_Project.Pages.Transporteurs.DetailsModel
+
+@{
+    ViewData["Title"] = "Détails du Transporteur";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-white py-3">
+                    <h4 class="mb-0"><i class="bi bi-info-circle-fill me-2"></i>Détails du Transporteur</h4>
+                </div>
+                <div class="card-body p-4">
+                    <h5 class="text-secondary border-bottom pb-2 mb-4">Informations Générales</h5>
+                    
+                    <dl class="row">
+                        <dt class="col-sm-4 text-muted">Nom du Transporteur</dt>
+                        <dd class="col-sm-8 fw-bold text-primary">@Html.DisplayFor(model => model.Transporteur.Nom)</dd>
+
+                        <dt class="col-sm-4 text-muted">Adresse</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.Adresse)</dd>
+
+                        <dt class="col-sm-4 text-muted">Téléphone</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.Telephone)</dd>
+
+                        <dt class="col-sm-4 text-muted">E-mail</dt>
+                        <dd class="col-sm-8 text-info">@Html.DisplayFor(model => model.Transporteur.Email)</dd>
+
+                        <dt class="col-sm-4 text-muted">Date de Création</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Transporteur.DateCreation)</dd>
+                    </dl>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a asp-page="./IndexTrasporteurs" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Retour à la liste
+                        </a>
+                        <a asp-page="./Edit" asp-route-id="@Model.Transporteur.TransporteurId" class="btn btn-primary px-4 shadow-sm">
+                            <i class="bi bi-pencil"></i> Modifier les informations
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

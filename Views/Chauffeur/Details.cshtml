@@ -1,0 +1,94 @@
+@model TMS_Project.Models.Chauffeur
+
+@{
+    ViewData["Title"] = "Détails Chauffeur";
+}
+
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold text-dark">Détails du Chauffeur</h1>
+            <p class="text-muted">Consultez les informations complètes et l'historique du conducteur.</p>
+        </div>
+        <div class="gap-2 d-flex">
+            <a asp-action="Edit" asp-route-id="@Model.ChauffeurId" class="btn btn-warning rounded-pill px-4 shadow-sm">
+                <i class="bi bi-pencil-square me-1"></i> Modifier
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i> Retour
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Card 1: Infos Personnelles -->
+        <div class="col-md-5">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 ps-4">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-person-lines-fill me-2 text-primary"></i>Informations Générales</h5>
+                </div>
+                <div class="card-body ps-4 pb-4">
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold">ID Chauffeur</label>
+                        <p class="fs-5 fw-bold text-success">#@Model.ChauffeurId</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted small text-uppercase fw-bold">Prénom & Nom</label>
+                        <p class="fs-5">@Model.Prenom @Model.Nom</p>
+                    </div>
+                    <div class="mb-0">
+                        <label class="text-muted small text-uppercase fw-bold">Transporteur</label>
+                        <p class="fs-5">
+                            <span class="badge bg-light text-dark border rounded-pill px-3">
+                                <i class="bi bi-truck me-1"></i> @(Model.Transporteur?.Nom ?? "Aucun")
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Statistiques ou Infos Supplémentaires -->
+        <div class="col-md-7">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 ps-4">
+                    <h5 class="fw-bold mb-0"><i class="bi bi-map me-2 text-primary"></i>Activité (Tournées)</h5>
+                </div>
+                <div class="card-body">
+                    @if (Model.Tournees != null && Model.Tournees.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead class="text-muted small">
+                                    <tr>
+                                        <th>ID Tournée</th>
+                                        <th>Date</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var t in Model.Tournees)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold">#@t.TourneeId</td>
+                                            <td>@t.DateTournee.ToShortDateString()</td>
+                                            <td><span class="badge bg-info-subtle text-info rounded-pill">En cours</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-4">
+                            <i class="bi bi-info-circle text-muted fs-2"></i>
+                            <p class="text-muted mt-2">Aucune tournée enregistrée pour ce chauffeur.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+@model ClientDemandeViewModel
+
+@{
+    ViewData["Title"] = "Inscription client";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Envoyer une demande</h1>
+        <p class="page-lead">Remplissez vos informations et les details de la marchandise. L'admin recevra votre demande immediatement.</p>
+    </div>
+</div>
+
+<div class="section-card">
+    <form asp-action="Inscription" method="post" class="row g-3">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label asp-for="NomClient" class="form-label"></label>
+            <input asp-for="NomClient" class="form-control" />
+            <span asp-validation-for="NomClient" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="EmailClient" class="form-label"></label>
+            <input asp-for="EmailClient" class="form-control" />
+            <span asp-validation-for="EmailClient" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="TelephoneClient" class="form-label"></label>
+            <input asp-for="TelephoneClient" class="form-control" />
+            <span asp-validation-for="TelephoneClient" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="AdresseClient" class="form-label"></label>
+            <input asp-for="AdresseClient" class="form-control" />
+            <span asp-validation-for="AdresseClient" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="TypeService" class="form-label"></label>
+            <select asp-for="TypeService" class="form-select">
+                <option value="Standard">Standard</option>
+                <option value="Express">Express</option>
+                <option value="Fragile">Fragile</option>
+                <option value="Refrigere">Refrigere</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Quantite" class="form-label"></label>
+            <input asp-for="Quantite" class="form-control" type="number" min="1" />
+            <span asp-validation-for="Quantite" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="PoidsKg" class="form-label"></label>
+            <input asp-for="PoidsKg" class="form-control" type="number" min="1" />
+            <span asp-validation-for="PoidsKg" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="AdresseLivraison" class="form-label"></label>
+            <input asp-for="AdresseLivraison" class="form-control" />
+            <span asp-validation-for="AdresseLivraison" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DateSouhaitee" class="form-label"></label>
+            <input asp-for="DateSouhaitee" class="form-control" type="date" />
+        </div>
+
+        <div class="col-12">
+            <label asp-for="DescriptionMarchandise" class="form-label"></label>
+            <textarea asp-for="DescriptionMarchandise" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="DescriptionMarchandise" class="text-danger"></span>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-dashboard-primary auth-submit">
+                <i class="bi bi-send-check"></i> Envoyer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

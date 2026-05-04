@@ -1,0 +1,50 @@
+@model TMS_Project.Models.Chauffeur
+
+@{
+    ViewData["Title"] = "Créer un chauffeur";
+}
+
+<h3>Créer un chauffeur</h3>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="TransporteurId" class="form-label"></label>
+        <select asp-for="TransporteurId" asp-items="ViewBag.TransporteurId" class="form-select">
+            <option value="">Sélectionner un transporteur</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Nom" class="form-label"></label>
+        <input asp-for="Nom" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Prenom" class="form-label"></label>
+        <input asp-for="Prenom" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Telephone" class="form-label"></label>
+        <input asp-for="Telephone" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="NumeroPermis" class="form-label"></label>
+        <input asp-for="NumeroPermis" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DateEmbauche" class="form-label"></label>
+        <input asp-for="DateEmbauche" type="date" class="form-control" />
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="EstActif" class="form-check-input" />
+        <label asp-for="EstActif" class="form-check-label"></label>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <a asp-action="Index" class="btn btn-secondary">Retour</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,85 @@
+﻿@model TMS_Project.Models.Camion
+
+@{
+    ViewData["Title"] = "Modifier Camion";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-warning text-dark py-3">
+            <h4 class="mb-0"><i class="bi bi-truck me-2"></i>Modifier le Camion</h4>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                
+                <!-- ID darouri bach i-t-appliqua l-update -->
+                <input type="hidden" asp-for="CamionId" />
+                
+                <!-- Hidden fields bach l-Model i-bqa Valide ila kano required f l-DB -->
+                <input type="hidden" asp-for="Marque" />
+                <input type="hidden" asp-for="CapaciteKg" />
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Immatriculation</label>
+                        <input asp-for="Immatriculation" class="form-control rounded-pill" placeholder="ex: 12345-A-6" required />
+                        <span asp-validation-for="Immatriculation" class="text-danger small"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Modèle</label>
+                        <input asp-for="Modele" class="form-control rounded-pill" placeholder="ex: Actros, FH16..." required />
+                        <span asp-validation-for="Modele" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Transporteur</label>
+                    <select asp-for="TransporteurId" class="form-select rounded-pill" asp-items="ViewBag.TransporteurId" required>
+                        <option value="">-- Sélectionner le transporteur --</option>
+                    </select>
+                    <span asp-validation-for="TransporteurId" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Date d'acquisition</label>
+                        <input asp-for="DateAcquisition" type="date" class="form-control rounded-pill" />
+                    </div>
+                    <div class="col-md-6 mb-3 d-flex align-items-center">
+                        <div class="form-check form-switch mt-4">
+                            <input class="form-check-input" type="checkbox" asp-for="EstActif" id="switchActif">
+                            <label class="form-check-label fw-bold ms-2" for="switchActif">Camion Opérationnel</label>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 text-muted">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">
+                        <i class="bi bi-arrow-left me-1"></i> Retour
+                    </a>
+                    <button type="submit" class="btn btn-warning rounded-pill px-5 fw-bold shadow-sm text-dark">
+                        <i class="bi bi-save me-1"></i> Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            if ($.validator) {
+                $.validator.methods.date = function (value, element) {
+                    return this.optional(element) || true;
+                };
+            }
+        });
+    </script>
+}

@@ -1,0 +1,83 @@
+@page
+@model TMS_Project.Pages.AccueilModel
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<section class="hero-card">
+    <span class="hero-eyebrow"><i class="bi bi-speedometer2"></i> Tableau de bord</span>
+    <h1 class="hero-title">Pilote ton activité transport avec une vue claire, rapide et professionnelle.</h1>
+    <p class="hero-subtitle">
+        Gère les transporteurs, les camions, les chauffeurs, les livraisons et les tournées depuis une interface plus moderne,
+        lisible et pensée comme un vrai poste de pilotage.
+    </p>
+    <div class="hero-actions">
+        <a class="btn-dashboard-primary" asp-controller="Transporteur" asp-action="Index">
+            <i class="bi bi-buildings"></i> Ouvrir les transporteurs
+        </a>
+        <a class="btn-dashboard-secondary" asp-controller="Tournee" asp-action="Index">
+            <i class="bi bi-calendar-event"></i> Voir les tournées
+        </a>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <article class="stat-card grid-span-3">
+        <div class="stat-label">Transporteurs</div>
+        <div class="stat-value">01</div>
+        <div class="stat-hint">Point d'entrée pour la flotte et les équipes</div>
+    </article>
+
+    <article class="stat-card grid-span-3">
+        <div class="stat-label">Camions</div>
+        <div class="stat-value">02</div>
+        <div class="stat-hint">Suivi des véhicules et immatriculations</div>
+    </article>
+
+    <article class="stat-card grid-span-3">
+        <div class="stat-label">Chauffeurs</div>
+        <div class="stat-value">03</div>
+        <div class="stat-hint">Affectation des équipes de conduite</div>
+    </article>
+
+    <article class="stat-card grid-span-3">
+        <div class="stat-label">Livraisons</div>
+        <div class="stat-value">04</div>
+        <div class="stat-hint">Préparation et suivi opérationnel</div>
+    </article>
+
+    <article class="dashboard-card grid-span-8">
+        <h2 class="section-title">Centre de contrôle</h2>
+        <p class="section-subtitle">Accès rapide aux zones les plus importantes de l'application.</p>
+
+        <div class="quick-links mt-4">
+            <a class="quick-link" asp-controller="Transporteur" asp-action="Index">
+                <div class="quick-link-title"><i class="bi bi-buildings me-2"></i>Transporteurs</div>
+                <div class="quick-link-text">Créer, consulter et suivre les sociétés de transport.</div>
+            </a>
+            <a class="quick-link" asp-controller="Camion" asp-action="Index">
+                <div class="quick-link-title"><i class="bi bi-truck me-2"></i>Camions</div>
+                <div class="quick-link-text">Consulter la flotte, les capacités et les véhicules actifs.</div>
+            </a>
+            <a class="quick-link" asp-controller="Chauffeur" asp-action="Index">
+                <div class="quick-link-title"><i class="bi bi-person-vcard me-2"></i>Chauffeurs</div>
+                <div class="quick-link-text">Gérer les profils conducteurs et leurs informations.</div>
+            </a>
+            <a class="quick-link" asp-controller="Livraison" asp-action="Index">
+                <div class="quick-link-title"><i class="bi bi-box-seam me-2"></i>Livraisons</div>
+                <div class="quick-link-text">Suivre les expéditions et leur statut en un coup d'oeil.</div>
+            </a>
+        </div>
+    </article>
+
+    <article class="dashboard-card grid-span-4">
+        <h2 class="section-title">Vue opérationnelle</h2>
+        <p class="section-subtitle">Lecture simple du parcours métier dans l'application.</p>
+        <div class="mini-info-list">
+            <div class="mini-info-item"><span>1. Créer un transporteur</span><span>Départ</span></div>
+            <div class="mini-info-item"><span>2. Ajouter camions et chauffeurs</span><span>Flotte</span></div>
+            <div class="mini-info-item"><span>3. Planifier les tournées</span><span>Planif</span></div>
+            <div class="mini-info-item"><span>4. Affecter les livraisons</span><span>Exécution</span></div>
+        </div>
+    </article>
+ </section>

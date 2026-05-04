@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<section class="client-hero tms-hero">
+    <div class="client-hero-media" role="img" aria-label="Camion de livraison sur route"></div>
+    <div class="client-hero-content">
+        <span class="hero-eyebrow"><i class="bi bi-truck"></i> TMS Maroc</span>
+        <h1 class="client-hero-title">Transport fiable pour vos marchandises.</h1>
+        <p class="client-hero-text">TRANS-LOG organise vos livraisons de ville a ville, valide chaque demande, puis vous permet de suivre votre statut avec une reference simple.</p>
+        <div class="hero-actions">
+            <a asp-controller="DemandeLivraison" asp-action="Inscription" class="btn btn-dashboard-primary">
+                <i class="bi bi-send-check"></i> Envoyer ma demande
+            </a>
+            <a asp-controller="Home" asp-action="Services" class="btn btn-dashboard-secondary">
+                <i class="bi bi-info-circle"></i> Voir nos services
+            </a>
+        </div>
+    </div>
+    <div class="hero-panel">
+        <div>
+            <strong>48h</strong>
+            <span>Traitement cible</span>
+        </div>
+        <div>
+            <strong>4</strong>
+            <span>Types de service</span>
+        </div>
+        <div>
+            <strong>100%</strong>
+            <span>Demandes verifiees</span>
+        </div>
+    </div>
+</section>
+
+<section class="client-section">
+    <div class="section-kicker">Parcours client</div>
+    <div class="client-section-head">
+        <h2>Une demande claire, un suivi simple.</h2>
+        <p>Le client envoie ses informations, l'administrateur valide, puis le reçu devient disponible uniquement apres accord.</p>
+    </div>
+    <div class="process-grid">
+        <article>
+            <i class="bi bi-pencil-square"></i>
+            <h3>1. Demande</h3>
+            <p>Vous indiquez vos coordonnees, la marchandise, le poids, la date souhaitee et l'adresse de livraison.</p>
+        </article>
+        <article>
+            <i class="bi bi-shield-check"></i>
+            <h3>2. Accord admin</h3>
+            <p>Notre equipe verifie la demande avant de l'accepter. Aucun reçu n'est affiche avant cette etape.</p>
+        </article>
+        <article>
+            <i class="bi bi-truck-front"></i>
+            <h3>3. Livraison</h3>
+            <p>Une fois acceptee, votre commande passe en traitement et son statut peut etre suivi en ligne.</p>
+        </article>
+    </div>
+</section>
+
+<section class="dashboard-grid">
+    <article class="stat-card grid-span-3">
+        <div class="stat-icon"><i class="bi bi-map"></i></div>
+        <div class="stat-label">Couverture</div>
+        <div class="stat-value">Maroc</div>
+        <div class="stat-hint">Axes Casablanca, Rabat, Tanger, Fes, Marrakech, Agadir</div>
+    </article>
+    <article class="stat-card grid-span-3">
+        <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
+        <div class="stat-label">Express</div>
+        <div class="stat-value">+45%</div>
+        <div class="stat-hint">Priorite sur les demandes urgentes</div>
+    </article>
+    <article class="stat-card grid-span-3">
+        <div class="stat-icon"><i class="bi bi-gem"></i></div>
+        <div class="stat-label">Fragile</div>
+        <div class="stat-value">+25%</div>
+        <div class="stat-hint">Manipulation adaptee aux colis sensibles</div>
+    </article>
+    <article class="stat-card grid-span-3">
+        <div class="stat-icon"><i class="bi bi-thermometer-snow"></i></div>
+        <div class="stat-label">Refrigere</div>
+        <div class="stat-value">+60%</div>
+        <div class="stat-hint">Pour les produits sous temperature controlee</div>
+    </article>
+</section>
+
+<section class="client-cta-band">
+    <div>
+        <span class="section-kicker">Besoin d'un transport ?</span>
+        <h2>Envoyez votre demande maintenant.</h2>
+        <p>Vous recevrez une reference de suivi. Le reçu sera visible seulement apres validation par l'administration.</p>
+    </div>
+    <a asp-controller="DemandeLivraison" asp-action="Inscription" class="btn btn-dashboard-primary">
+        <i class="bi bi-arrow-right-circle"></i> Commencer
+    </a>
+</section>
