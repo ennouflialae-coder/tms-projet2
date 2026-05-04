@@ -1,0 +1,125 @@
+@inject TmsDbContext Db
+@{
+    var isAdmin = User.IsInRole("Admin");
+    var isAuthenticated = User.Identity?.IsAuthenticated == true;
+    var pendingRequests = 0;
+    if (isAdmin)
+    {
+        pendingRequests = await Db.DemandesLivraison.CountAsync(d => d.Statut == "En attente");
+    }
+}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TRANS-LOG</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    @if (isAdmin)
+    {
+        <div class="app-layout">
+            <aside class="app-sidebar">
+                <a class="sidebar-brand" asp-controller="Home" asp-action="Dashboard">
+                    <span class="brand-mark"><i class="bi bi-truck-flatbed"></i></span>
+                    <span>TRANS-LOG</span>
+                </a>
+
+                <nav class="sidebar-nav">
+                    <a asp-controller="Home" asp-action="Dashboard"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+                    <a asp-controller="Transporteur" asp-action="Index"><i class="bi bi-buildings"></i><span>Transporteurs</span></a>
+                    <a asp-controller="Camion" asp-action="Index"><i class="bi bi-truck"></i><span>Camions</span></a>
+                    <a asp-controller="Chauffeur" asp-action="Index"><i class="bi bi-person-vcard"></i><span>Chauffeurs</span></a>
+                    <a asp-controller="Livraison" asp-action="Index"><i class="bi bi-box-seam"></i><span>Livraisons</span></a>
+                    <a asp-controller="Tournee" asp-action="Index"><i class="bi bi-calendar-event"></i><span>Tournees</span></a>
+                    <a asp-controller="DemandeLivraison" asp-action="Admin">
+                        <i class="bi bi-bell"></i><span>Demandes</span>
+                        @if (pendingRequests > 0)
+                        {
+                            <strong class="nav-badge">@pendingRequests</strong>
+                        }
+                    </a>
+                    <a asp-controller="Home" asp-action="Index"><i class="bi bi-globe"></i><span>Site client</span></a>
+                </nav>
+            </aside>
+
+            <div class="content-shell">
+                <header class="topbar">
+                    <div>
+                        <div class="topbar-label">Espace administration</div>
+                        <div class="topbar-title">@ViewData["Title"]</div>
+                    </div>
+
+                    <div class="topbar-actions">
+                        @if (pendingRequests > 0)
+                        {
+                            <a asp-controller="DemandeLivraison" asp-action="Admin" class="notification-pill">
+                                <i class="bi bi-bell-fill"></i> @pendingRequests nouvelle(s) demande(s)
+                            </a>
+                        }
+                        <span class="user-pill"><i class="bi bi-person-circle"></i>@User.Identity?.Name</span>
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                            @Html.AntiForgeryToken()
+                            <button class="btn btn-soft" type="submit"><i class="bi bi-box-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </header>
+
+                <main class="app-main">
+                    @RenderBody()
+                </main>
+
+                <footer class="app-footer">
+                    <div class="footer-note d-flex flex-wrap justify-content-between gap-2">
+                        <span><strong>TRANS-LOG</strong> - Tableau de bord transport</span>
+                        <span>&copy; 2026</span>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="public-shell">
+            <header class="public-nav">
+                <a class="sidebar-brand" asp-controller="Home" asp-action="Index">
+                    <span class="brand-mark"><i class="bi bi-truck-flatbed"></i></span>
+                    <span>TRANS-LOG</span>
+                </a>
+                <nav class="public-links">
+                    <a asp-controller="Home" asp-action="Index">Accueil</a>
+                    <a asp-controller="Home" asp-action="Tarifs">Tarifs</a>
+                    <a asp-controller="DemandeLivraison" asp-action="Inscription">Demande</a>
+                    <a asp-controller="Account" asp-action="Connection">Account</a>
+                    <a asp-controller="Account" asp-action="Connection" class="public-cta">Connection</a>
+                    @if (isAuthenticated)
+                    {
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="m-0">
+                            @Html.AntiForgeryToken()
+                            <button class="btn btn-soft" type="submit"><i class="bi bi-box-arrow-right"></i></button>
+                        </form>
+                    }
+                </nav>
+            </header>
+
+            <main class="app-main public-main">
+                @RenderBody()
+            </main>
+
+            <footer class="app-footer">
+                <div class="footer-note d-flex flex-wrap justify-content-between gap-2">
+                    <span><strong>TRANS-LOG</strong> - Livraison et logistique au Maroc</span>
+                    <span>&copy; 2026</span>
+                </div>
+            </footer>
+        </div>
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
