@@ -1,0 +1,220 @@
+Utilisation des paramètres de lancement à partir de Properties\launchSettings.json...
+warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+      No store type was specified for the decimal property 'CoutTotal' on entity type 'Tournee'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+warn: Microsoft.EntityFrameworkCore.Model.Validation[30000]
+      No store type was specified for the decimal property 'MontantEstime' on entity type 'Tournee'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (73ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2,882ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+      IF EXISTS
+          (SELECT *
+           FROM [sys].[objects] o
+           WHERE [o].[type] = 'U'
+           AND [o].[is_ms_shipped] = 0
+           AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+              FROM [sys].[extended_properties] AS [ep]
+              WHERE [ep].[minor_id] = 0
+                  AND [ep].[class] = 1
+                  AND [ep].[name] = N'microsoft_database_tools_support'
+          )
+      )
+      SELECT 1 ELSE SELECT 0
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (18ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+IF OBJECT_ID(N'[DemandesLivraison]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [DemandesLivraison](
+        [DemandeLivraisonId] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+        [ClientId] INT NULL,
+        [TypeService] NVARCHAR(100) NOT NULL DEFAULT 'Standard',
+        [DescriptionMarchandise] NVARCHAR(MAX) NOT NULL DEFAULT '',
+        [Adresse] NVARCHAR(MAX) NOT NULL DEFAULT '',
+        [Quantite] INT NOT NULL DEFAULT 1,
+        [PoidsKg] INT NOT NULL DEFAULT 0,
+        [DateSouhaitee] DATETIME2 NOT NULL DEFAULT GETDATE(),
+        [Statut] NVARCHAR(100) NOT NULL DEFAULT 'En attente',
+        [MontantEstime] DECIMAL(10,2) NOT NULL DEFAULT 0,
+        [CamionAffecteId] INT NULL,
+        [ChauffeurAffecteId] INT NULL,
+        [NumeroRecu] NVARCHAR(100) NOT NULL DEFAULT '',
+        [DateValidation] DATETIME2 NULL,
+        [CommentaireValidation] NVARCHAR(MAX) NOT NULL DEFAULT '',
+        [CreatedAt] DATETIME2 NOT NULL DEFAULT GETDATE()
+    )
+END
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+IF COL_LENGTH('DemandesLivraison', 'TypeService') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [TypeService] NVARCHAR(100) NOT NULL DEFAULT 'Standard';
+IF COL_LENGTH('DemandesLivraison', 'DescriptionMarchandise') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [DescriptionMarchandise] NVARCHAR(MAX) NOT NULL DEFAULT '';
+IF COL_LENGTH('DemandesLivraison', 'Quantite') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [Quantite] INT NOT NULL DEFAULT 1;
+IF COL_LENGTH('DemandesLivraison', 'NumeroRecu') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [NumeroRecu] NVARCHAR(100) NOT NULL DEFAULT '';
+IF COL_LENGTH('DemandesLivraison', 'DateValidation') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [DateValidation] DATETIME2 NULL;
+IF COL_LENGTH('DemandesLivraison', 'CommentaireValidation') IS NULL
+    ALTER TABLE [DemandesLivraison] ADD [CommentaireValidation] NVARCHAR(MAX) NOT NULL DEFAULT '';
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (57ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      
+IF OBJECT_ID(N'[AspNetRoles]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetRoles](
+        [Id] NVARCHAR(450) NOT NULL CONSTRAINT [PK_AspNetRoles] PRIMARY KEY,
+        [Name] NVARCHAR(256) NULL,
+        [NormalizedName] NVARCHAR(256) NULL,
+        [ConcurrencyStamp] NVARCHAR(MAX) NULL
+    );
+    CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles]([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+END
+
+IF OBJECT_ID(N'[AspNetUsers]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetUsers](
+        [Id] NVARCHAR(450) NOT NULL CONSTRAINT [PK_AspNetUsers] PRIMARY KEY,
+        [UserName] NVARCHAR(256) NULL,
+        [NormalizedUserName] NVARCHAR(256) NULL,
+        [Email] NVARCHAR(256) NULL,
+        [NormalizedEmail] NVARCHAR(256) NULL,
+        [EmailConfirmed] BIT NOT NULL,
+        [PasswordHash] NVARCHAR(MAX) NULL,
+        [SecurityStamp] NVARCHAR(MAX) NULL,
+        [ConcurrencyStamp] NVARCHAR(MAX) NULL,
+        [PhoneNumber] NVARCHAR(MAX) NULL,
+        [PhoneNumberConfirmed] BIT NOT NULL,
+        [TwoFactorEnabled] BIT NOT NULL,
+        [LockoutEnd] DATETIMEOFFSET NULL,
+        [LockoutEnabled] BIT NOT NULL,
+        [AccessFailedCount] INT NOT NULL
+    );
+    CREATE INDEX [EmailIndex] ON [AspNetUsers]([NormalizedEmail]);
+    CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers]([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+END
+
+IF OBJECT_ID(N'[AspNetRoleClaims]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetRoleClaims](
+        [Id] INT IDENTITY(1,1) NOT NULL CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY,
+        [RoleId] NVARCHAR(450) NOT NULL,
+        [ClaimType] NVARCHAR(MAX) NULL,
+        [ClaimValue] NVARCHAR(MAX) NULL,
+        CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY([RoleId]) REFERENCES [AspNetRoles]([Id]) ON DELETE CASCADE
+    );
+    CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims]([RoleId]);
+END
+
+IF OBJECT_ID(N'[AspNetUserClaims]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetUserClaims](
+        [Id] INT IDENTITY(1,1) NOT NULL CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY,
+        [UserId] NVARCHAR(450) NOT NULL,
+        [ClaimType] NVARCHAR(MAX) NULL,
+        [ClaimValue] NVARCHAR(MAX) NULL,
+        CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
+    );
+    CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims]([UserId]);
+END
+
+IF OBJECT_ID(N'[AspNetUserLogins]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetUserLogins](
+        [LoginProvider] NVARCHAR(450) NOT NULL,
+        [ProviderKey] NVARCHAR(450) NOT NULL,
+        [ProviderDisplayName] NVARCHAR(MAX) NULL,
+        [UserId] NVARCHAR(450) NOT NULL,
+        CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY([LoginProvider], [ProviderKey]),
+        CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
+    );
+    CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins]([UserId]);
+END
+
+IF OBJECT_ID(N'[AspNetUserRoles]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetUserRoles](
+        [UserId] NVARCHAR(450) NOT NULL,
+        [RoleId] NVARCHAR(450) NOT NULL,
+        CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY([UserId], [RoleId]),
+        CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY([RoleId]) REFERENCES [AspNetRoles]([Id]) ON DELETE CASCADE,
+        CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
+    );
+    CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles]([RoleId]);
+END
+
+IF OBJECT_ID(N'[AspNetUserTokens]', N'U') IS NULL
+BEGIN
+    CREATE TABLE [AspNetUserTokens](
+        [UserId] NVARCHAR(450) NOT NULL,
+        [LoginProvider] NVARCHAR(450) NOT NULL,
+        [Name] NVARCHAR(450) NOT NULL,
+        [Value] NVARCHAR(MAX) NULL,
+        CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY([UserId], [LoginProvider], [Name]),
+        CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY([UserId]) REFERENCES [AspNetUsers]([Id]) ON DELETE CASCADE
+    );
+END
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (216ms) [Parameters=[@normalizedName='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+      FROM [AspNetRoles] AS [a]
+      WHERE [a].[NormalizedName] = @normalizedName
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (8ms) [Parameters=[@normalizedName='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+      FROM [AspNetRoles] AS [a]
+      WHERE [a].[NormalizedName] = @normalizedName
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (137ms) [Parameters=[@normalizedEmail='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+      FROM [AspNetUsers] AS [a]
+      WHERE [a].[NormalizedEmail] = @normalizedEmail
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (14ms) [Parameters=[@normalizedRoleName='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+      FROM [AspNetRoles] AS [a]
+      WHERE [a].[NormalizedName] = @normalizedRoleName
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (30ms) [Parameters=[@p='?' (Size = 450), @p1='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [a].[UserId], [a].[RoleId]
+      FROM [AspNetUserRoles] AS [a]
+      WHERE [a].[UserId] = @p AND [a].[RoleId] = @p1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (5ms) [Parameters=[@normalizedEmail='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(2) [a].[Id], [a].[AccessFailedCount], [a].[ConcurrencyStamp], [a].[Email], [a].[EmailConfirmed], [a].[LockoutEnabled], [a].[LockoutEnd], [a].[NormalizedEmail], [a].[NormalizedUserName], [a].[PasswordHash], [a].[PhoneNumber], [a].[PhoneNumberConfirmed], [a].[SecurityStamp], [a].[TwoFactorEnabled], [a].[UserName]
+      FROM [AspNetUsers] AS [a]
+      WHERE [a].[NormalizedEmail] = @normalizedEmail
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[@normalizedRoleName='?' (Size = 256)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(2) [a].[Id], [a].[ConcurrencyStamp], [a].[Name], [a].[NormalizedName]
+      FROM [AspNetRoles] AS [a]
+      WHERE [a].[NormalizedName] = @normalizedRoleName
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[@p='?' (Size = 450), @p1='?' (Size = 450)], CommandType='Text', CommandTimeout='30']
+      SELECT TOP(1) [a].[UserId], [a].[RoleId]
+      FROM [AspNetUserRoles] AS [a]
+      WHERE [a].[UserId] = @p AND [a].[RoleId] = @p1
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (123ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT CASE
+          WHEN EXISTS (
+              SELECT 1
+              FROM [Transporteur] AS [t]) THEN CAST(1 AS bit)
+          ELSE CAST(0 AS bit)
+      END
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5121
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\HP\Desktop\alae\TMS-Project-main
+warn: Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware[3]
+      Failed to determine the https port for redirect.
+warn: Microsoft.AspNetCore.Server.Kestrel[22]
+      As of "05/04/2026 14:23:44 +00:00", the heartbeat has been running for "00:00:01.0191334" which is longer than "00:00:01". This could be caused by thread pool starvation.

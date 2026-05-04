@@ -1,0 +1,46 @@
+# Visual Studio
+.vs/
+.vscode/
+*.sln.DotSettings
+bin/
+obj/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.user
+
+# Local database
+*.mdf
+*.ldf
+
+# NuGet
+.nuget/
+packages/
+*.nupkg
+*.snupkg
+.dotnet/
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+
+# Environment variables
+appsettings.Development.json
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencies
+node_modules/
